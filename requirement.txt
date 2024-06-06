@@ -1,0 +1,6 @@
+nltk
+pandas
+spacy
+span_marker
+openpyxl
+xlsxwriter

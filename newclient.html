@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const ws = new WebSocket("ws://localhost:7890");
+
+            ws.onopen = () => {
+                console.log("Connected to WebSocket server");
+            };
+
+            ws.onmessage = (event) => {
+                const chatBox = document.getElementById("chatBox");
+                chatBox.innerHTML += `<div>Bot: ${event.data}</div>`;
+            };
+
+            ws.onclose = () => {
+                console.log("Disconnected from WebSocket server");
+            };
+
+            document.getElementById("sendBtn").addEventListener("click", () => {
+                const input = document.getElementById("userInput").value;
+                ws.send(input);
+                document.getElementById("chatBox").innerHTML += `<div>You: ${input}</div>`;
+                document.getElementById("userInput").value = '';
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>WebSocket Chat</h1>
+    <div id="chatBox"></div>
+    <input type="text" id="userInput" placeholder="Type your message here...">
+    <button id="sendBtn">Send</button>
+</body>
+</html>
